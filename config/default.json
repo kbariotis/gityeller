@@ -1,0 +1,9 @@
+{
+    "github": {
+        "token": "",
+        "debug": true
+    },
+    "mongo": {
+        "uri": "mongodb://localhost:27017/database"
+    }
+}

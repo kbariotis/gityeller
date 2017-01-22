@@ -1,0 +1,78 @@
+/* https://dribbble.com/shots/3233564-IdeaFire-Mockup */
+
+body {
+    background: url(./background.svg);
+    background-size: 100%;
+    color: #FCFBFB;
+}
+
+::-webkit-input-placeholder {
+   color: #A7A7A7 !important;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #A7A7A7 !important;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #A7A7A7 !important;
+}
+
+:-ms-input-placeholder {
+   color: #A7A7A7 !important;
+}
+
+label {
+    color: #A7A7A7;
+}
+
+.customButton {
+    color: #FCFBFB;
+    border: 0;
+    border-radius: 0;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.customPrimaryButton {
+    composes: customButton;
+    background: #7500ff;
+}
+
+.customDefaultButton {
+    composes: customButton;
+    background: #7500ff;
+}
+
+.customControl:focus,
+.customControl {
+    background: #FCFBFB;
+    color: #A7A7A7;
+    border: 0;
+    border-bottom: 1px solid #A7A7A7;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: 20px;
+    padding: 30px 10px;
+}
+
+.actions {
+    padding: 20px 0;
+}
+
+.stepsContainer {
+    position: relative;
+    margin-top: 50px;
+}
+
+.step {
+}
+
+.activeStep {
+    composes: step;
+    display: block;
+}
+.inactiveStep {
+    composes: step;
+    display: none;
+}

@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+dist
+*.log
+coverage
+.idea
+
+config/*.json
+!config/default.json
