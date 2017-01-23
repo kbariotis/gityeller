@@ -52,7 +52,7 @@ module.exports = {
       test: /App\.css$/,
       loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
     }, {
-      test: /bootstrap\.css$/,
+      test: /(main\.css|bootstrap\.css)$/,
       loader: ExtractTextPlugin.extract('style', 'css!postcss')
     }, {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"

@@ -43,7 +43,7 @@ module.exports = {
       test: /App\.css$/,
       loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
     }, {
-      test: /bootstrap\.css$/,
+      test: /(main\.css|bootstrap\.css)$/,
       loader: 'style!css'
     }, {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"

@@ -1,47 +1,5 @@
 /* https://dribbble.com/shots/3233564-IdeaFire-Mockup */
 
-html,
-body {
-  height: 100%
-}
-
-body {
-    background: url(./background.svg);
-    background-size: cover;
-    color: #FCFBFB;
-}
-
-a {
-    color: inherit;
-    text-decoration: underline;
-}
-
-a:focus,
-a:active,
-a:hover {
-    color: #7500ff;
-}
-
-::-webkit-input-placeholder {
-   color: #A7A7A7 !important;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   color: #A7A7A7 !important;
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: #A7A7A7 !important;
-}
-
-:-ms-input-placeholder {
-   color: #A7A7A7 !important;
-}
-
-label {
-    color: #A7A7A7;
-}
-
 .customButton {
     color: #FCFBFB;
     border: 0;

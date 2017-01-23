@@ -74,7 +74,7 @@ export default class App extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-xs-4 col-xs-offset-4">
+          <div className="col-sm-4 col-sm-offset-4">
             <form className={styles.stepsContainer}>
               <div className={this.state.activeStep === 1 ? styles.activeStep : styles.inactiveStep}>
                 <div className="form-group">

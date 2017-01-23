@@ -1,0 +1,61 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+    background: url(./background.svg);
+    background-size: cover;
+    color: #FCFBFB;
+    font-size: 18px;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:focus,
+a:active,
+a:hover {
+    color: #7500ff;
+}
+
+::-webkit-input-placeholder {
+   color: #A7A7A7 !important;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #A7A7A7 !important;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #A7A7A7 !important;
+}
+
+:-ms-input-placeholder {
+   color: #A7A7A7 !important;
+}
+
+label {
+    color: #A7A7A7;
+}
+
+.parent-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.footer {
+  margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+
+  .parent-container {
+    position: relative;
+  }
+
+}
