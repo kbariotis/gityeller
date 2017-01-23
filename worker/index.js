@@ -21,6 +21,39 @@ github.authenticate({
   token: config.get('github.token')
 });
 
+const sendEmail = (subscription, issue) => {
+  logger.info('Send email for issue:', issue.number);
+
+  const data = {
+    from: 'no-reply@gityeller.com',
+    to: subscription.email,
+    subject: 'Hey! I\'ve found a new issue',
+    html: `
+Hello there!<br/><br/>
+I've found a new issue with label "${subscription.label}" from
+the ${subscription.repo} repository.<br/><br/>
+
+<a href="${issue.html_url}">${issue.title}</a><br/><br/>
+
+Cheers!<br/>
+
+GitYeller
+
+<hr>
+<small>Unsubscribe from future emails like this, <a href="https://gityeller.com/unsubscribe/${subscription._id}">here</a>.</small>
+    `
+  };
+
+  mailgun.messages().send(data, (error) => {
+    if (error) {
+      logger.error(`Send email for issue: ${issue.number} - Error!`);
+      logger.error(error);
+    } else {
+      logger.info(`Send email for issue: ${issue.number} - Success!`);
+    }
+  });
+};
+
 const editItem = item => {
   return new Promise((resolve, reject) => {
     const [owner, repo] = item.repo.split('/');
@@ -34,6 +67,7 @@ const editItem = item => {
       headers: headers,
       owner: owner,
       repo: repo,
+      labels: item.label,
       direction: 'desc'
     };
 
@@ -62,7 +96,7 @@ const editItem = item => {
             }
           });
 
-          res.forEach(issue => logger.info('send email for issue:', issue.number));
+          res.forEach(issue => sendEmail(item, issue));
         }
 
         database.collection('subscriptions').update({
