@@ -17,9 +17,7 @@
     "github": "^8.1.0",
     "mongodb": "^2.2.21",
     "webpack": "^1.14.0",
-    "winston": "^2.3.0"
-  },
-  "devDependencies": {
+    "winston": "^2.3.0",
     "validator": "^6.2.1",
     "parse-github-url": "^1.0.0",
     "react": "^15.4.2",
