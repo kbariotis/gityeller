@@ -66,10 +66,12 @@ export default class App extends React.Component {
     }
   }
   chooseLabel(e) {
-    this.setState({
-      labelChosen: e.target.value,
-      activeStep: ++this.state.activeStep
-    });
+    if (e.target.value) {
+      this.setState({
+        labelChosen: e.target.value,
+        activeStep: ++this.state.activeStep
+      });
+    }
   }
   startOver(e) {
     e.preventDefault();
@@ -136,6 +138,7 @@ export default class App extends React.Component {
                       onChange={this.chooseLabel.bind(this)}
                       autoComplete="off"
                     >
+                      <option>Select a label</option>
                       {this.state.labels.map((label, id) => {
                         return <option id={label.id} key={id}>{label.name}</option>;
                       })}

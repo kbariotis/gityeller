@@ -28,7 +28,8 @@ router.get('/repo/:owner/:repo/labels', (req, res, next) => {
 
   github.issues.getLabels({
     repo: req.params.repo,
-    owner: req.params.owner
+    owner: req.params.owner,
+    per_page: 100
   })
   .then((response) => res.json(response))
   .catch((err) => next(err));
