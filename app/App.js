@@ -34,7 +34,8 @@ export default class App extends React.Component {
     this.setState({activeStep: ++this.state.activeStep});
 
     axios.get(`/api/repo/${this.state.repo}/labels`)
-      .then((res) => this.setState({labels: res.data}));
+      .then((res) => this.setState({labels: res.data}))
+      .catch(() => this.setState({labels: --this.state.activeStep}))
   }
   subscribe(e) {
     e.preventDefault();
@@ -123,7 +124,10 @@ export default class App extends React.Component {
                 <div className="form-group">
                   <label htmlFor="labels">Labels</label>
                   {this.state.labels.length === 0 &&
-                    <br/><b>Wait for it ...</b>
+                    <div>
+                      <br/>
+                      <b>Wait for it ...</b>
+                    </div>
                   }
                   {this.state.labels.length > 0 &&
                     <select
