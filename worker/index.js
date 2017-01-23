@@ -4,6 +4,11 @@ const GitHubApi = require('github');
 const config = require('config');
 const logger = require('winston');
 
+const mailgun = require('mailgun-js')({
+  apiKey: config.get('mailgun.token'),
+  domain: config.get('mailgun.domain')
+});
+
 let database = null;
 
 const github = new GitHubApi({

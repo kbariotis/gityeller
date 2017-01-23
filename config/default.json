@@ -5,5 +5,10 @@
     },
     "mongo": {
         "uri": "mongodb://localhost:27017/database"
+    },
+    "mailgun": {
+        "token": "",
+        "domain": "",
+        "test": true
     }
 }

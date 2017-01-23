@@ -36,6 +36,7 @@
     "joi": "^10.2.0",
     "jsdom": "^9.9.1",
     "json-loader": "^0.5.3",
+    "mailgun-js": "^0.8.0",
     "mocha": "^3.2.0",
     "mocha-jsdom": "^1.0.0",
     "mongodb": "^2.2.21",
