@@ -119,7 +119,7 @@ const run = db => {
   const cursor = collection.find({});
 
   function processItem(item) {
-    logger.info('Checking ${item.email}/${item.repo}/${item.label}');
+    logger.info(`Checking ${item.email}/${item.repo}/${item.label}`);
 
     if (item === null) {
       logger.info('End of cursor');
