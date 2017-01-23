@@ -101,7 +101,7 @@ export default class App extends React.Component {
                     autoComplete="off"
                     />
                   <div className={`row ${styles.actions}`}>
-                    <div className="col-sm-6">
+                    <div className="col-xs-6">
                       {this.state.activeStep !== 1 &&
                         <button
                           className={`btn btn-default ${styles.customDefaultButton}`}
@@ -110,7 +110,7 @@ export default class App extends React.Component {
                         </button>
                       }
                     </div>
-                    <div className="col-sm-6 text-right">
+                    <div className="col-xs-6 text-right">
                       {this.state.repo &&
                         <button
                           className={`btn btn-default ${styles.customPrimaryButton}`}
@@ -145,7 +145,7 @@ export default class App extends React.Component {
                     </select>
                   }
                   <div className={`row ${styles.actions}`}>
-                    <div className="col-sm-6">
+                    <div className="col-xs-6">
                       {this.state.activeStep !== 1 &&
                         <button
                           className={`btn btn-default ${styles.customDefaultButton}`}
@@ -170,14 +170,14 @@ export default class App extends React.Component {
                   />
 
                   <div className={`row ${styles.actions}`}>
-                    <div className="col-sm-6">
+                    <div className="col-xs-6">
                       <button
                         className={`btn btn-default ${styles.customDefaultButton}`}
                         onClick={this.startOver.bind(this)}>
                           Reset
                       </button>
                     </div>
-                    <div className="col-sm-6 text-right">
+                    <div className="col-xs-6 text-right">
                       {this.state.email &&
                         <button
                           className={`btn btn-default ${styles.customPrimaryButton}`}
@@ -195,14 +195,14 @@ export default class App extends React.Component {
                   You are about to subscribe to <b>{this.state.repo}</b> with the <b>{this.state.labelChosen}</b> label using the <b>{this.state.email}</b> email.
                 </p>
                 <div className={`row ${styles.actions}`}>
-                    <div className="col-sm-6">
+                    <div className="col-xs-6">
                       <button
                         className={`btn btn-default ${styles.customDefaultButton}`}
                         onClick={this.startOver.bind(this)}>
                           Reset
                       </button>
                     </div>
-                    <div className="col-sm-6 text-right">
+                    <div className="col-xs-6 text-right">
                       <button
                         className={`btn btn-default ${styles.customPrimaryButton}`}
                         disabled={!this.state.labelChosen}

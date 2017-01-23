@@ -62,8 +62,18 @@ label {
 
 @media (max-width: 768px) {
 
+  button.btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
   .parent-container {
     position: relative;
+    margin-top: 50px;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
   }
 
 }
