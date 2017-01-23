@@ -37,7 +37,8 @@ export default class App extends React.Component {
       email: this.state.email,
       repo: this.state.repo,
       label: this.state.labelChosen
-    });
+    })
+    .then(() => this.setState({activeStep: ++this.state.activeStep}));
   }
   setEmail(e) {
     e.preventDefault();
@@ -169,7 +170,7 @@ export default class App extends React.Component {
                 </div>
               </div>
               <div className={this.state.activeStep === 4 ? styles.activeStep : styles.inactiveStep}>
-                <p>
+                <p className="text-center">
                   You are about to subscribe to <b>{this.state.repo}</b> with the <b>{this.state.labelChosen}</b> label using the <b>{this.state.email}</b> email.
                 </p>
                 <div className={`row ${styles.actions}`}>
@@ -186,6 +187,20 @@ export default class App extends React.Component {
                         disabled={!this.state.labelChosen}
                         onClick={this.subscribe.bind(this)}>
                           Subscribe
+                      </button>
+                    </div>
+                  </div>
+              </div>
+              <div className={this.state.activeStep === 5 ? styles.activeStep : styles.inactiveStep}>
+                <p className="text-center">
+                  👏 &nbsp;Hey! You did it! 👏<br/>Now go get some work done. I will let you know once I've found a new issue!
+                </p>
+                <div className={`row ${styles.actions}`}>
+                    <div className="col-sm-12 text-center">
+                      <button
+                        className={`btn btn-default ${styles.customPrimaryButton}`}
+                        onClick={this.startOver.bind(this)}>
+                          Again!
                       </button>
                     </div>
                   </div>
