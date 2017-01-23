@@ -6,6 +6,17 @@ body {
     color: #FCFBFB;
 }
 
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:focus,
+a:active,
+a:hover {
+    color: #7500ff;
+}
+
 ::-webkit-input-placeholder {
    color: #A7A7A7 !important;
 }
@@ -81,10 +92,12 @@ label {
     border-radius: 0;
     font-size: 20px;
     padding: 30px 10px;
+    height: 60px;
 }
 
 .actions {
     padding: 20px 0;
+    min-height: 87px;
 }
 
 .stepsContainer {
