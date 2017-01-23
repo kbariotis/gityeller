@@ -26,7 +26,7 @@ export default class App extends React.Component {
       });
     }
 
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && this.state.repo) {
       this.getLabels();
     }
   }
@@ -121,9 +121,9 @@ export default class App extends React.Component {
               </div>
               <div className={this.state.activeStep === 2 ? styles.activeStep : styles.inactiveStep}>
                 <div className="form-group">
-                  <label htmlFor="labels">Repo</label>
+                  <label htmlFor="labels">Labels</label>
                   {this.state.labels.length === 0 &&
-                    <b>Wait for it ...</b>
+                    <br/><b>Wait for it ...</b>
                   }
                   {this.state.labels.length > 0 &&
                     <select
