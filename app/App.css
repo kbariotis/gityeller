@@ -29,8 +29,8 @@
 
 .customDefaultButton {
     composes: customButton;
-    border: 1px solid #7500ff;
-    background: #7500ff;
+    border: 1px solid #f35463;
+    background: #f35463;
 }
 
 .customDefaultButton:hover,
@@ -41,8 +41,8 @@
     font-size: 18px;
     padding: 10px 20px;
     background: #fff;
-    color: #7500ff;
-    border: 1px solid #7500ff;
+    color: #f35463;
+    border: 1px solid #f35463;
     outline: 0;
 }
 
