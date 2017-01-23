@@ -36,20 +36,47 @@ label {
 
 .customPrimaryButton {
     composes: customButton;
+    border: 1px solid #7500ff;
     background: #7500ff;
+}
+
+.customPrimaryButton:hover,
+.customPrimaryButton:active,
+.customPrimaryButton:focus {
+    border: 0;
+    border-radius: 0;
+    font-size: 18px;
+    padding: 10px 20px;
+    background: #fff;
+    color: #7500ff;
+    border: 1px solid #7500ff;
+    outline: 0;
 }
 
 .customDefaultButton {
     composes: customButton;
+    border: 1px solid #7500ff;
     background: #7500ff;
+}
+
+.customDefaultButton:hover,
+.customDefaultButton:active,
+.customDefaultButton:focus {
+    border: 0;
+    border-radius: 0;
+    font-size: 18px;
+    padding: 10px 20px;
+    background: #fff;
+    color: #7500ff;
+    border: 1px solid #7500ff;
+    outline: 0;
 }
 
 .customControl:focus,
 .customControl {
     background: #FCFBFB;
-    color: #A7A7A7;
+    color: #7500ff;
     border: 0;
-    border-bottom: 1px solid #A7A7A7;
     box-shadow: none;
     border-radius: 0;
     font-size: 20px;
