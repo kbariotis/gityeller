@@ -109,7 +109,7 @@ const editItem = item => {
         });
       }
 
-      setTimeout(resolve, 5000);
+      setTimeout(resolve, 3000);
     });
   });
 };
@@ -119,16 +119,17 @@ const run = db => {
   const cursor = collection.find({});
 
   function processItem(item) {
-    logger.info(`Checking ${item.email}/${item.repo}/${item.label}`);
 
     if (item === null) {
       logger.info('End of cursor');
       return run(db);
+    } else {
+      logger.info(`Checking ${item.email}/${item.repo}/${item.label}`);
     }
 
     return editItem(item)
-      .then(() => cursor.nextObject())
-      .then(i => processItem(i));
+      .then(() => cursor.nextObject(processItem))
+      .catch(() => cursor.nextObject(processItem));
   }
 
   return cursor
