@@ -27,14 +27,14 @@ export default class App extends React.Component {
   getLabels(e) {
     e.preventDefault();
 
-    fetch(`/repo/${this.state.repo}/labels`)
+    fetch(`/api/repo/${this.state.repo}/labels`)
       .then((res) => res.json())
       .then((labels) => this.setState({labels, activeStep: ++this.state.activeStep}));
   }
   subscribe(e) {
     e.preventDefault();
 
-    axios.post('/subscriptions', {
+    axios.post('/api/subscriptions', {
       email: this.state.email,
       repo: this.state.repo,
       label: this.state.labelChosen

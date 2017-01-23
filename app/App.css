@@ -1,8 +1,13 @@
 /* https://dribbble.com/shots/3233564-IdeaFire-Mockup */
 
+html,
+body {
+  height: 100%
+}
+
 body {
     background: url(./background.svg);
-    background-size: 100%;
+    background-size: cover;
     color: #FCFBFB;
 }
 
