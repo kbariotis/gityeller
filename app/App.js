@@ -27,9 +27,8 @@ export default class App extends React.Component {
   getLabels(e) {
     e.preventDefault();
 
-    fetch(`/api/repo/${this.state.repo}/labels`)
-      .then((res) => res.json())
-      .then((labels) => this.setState({labels, activeStep: ++this.state.activeStep}));
+    axios.get(`/api/repo/${this.state.repo}/labels`)
+      .then((res) => this.setState({labels: res.data, activeStep: ++this.state.activeStep}));
   }
   subscribe(e) {
     e.preventDefault();

@@ -25,10 +25,6 @@ a:hover {
    color: #A7A7A7 !important;
 }
 
-:-moz-placeholder { /* Firefox 18- */
-   color: #A7A7A7 !important;
-}
-
 ::-moz-placeholder {  /* Firefox 19+ */
    color: #A7A7A7 !important;
 }

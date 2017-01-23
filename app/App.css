@@ -46,15 +46,19 @@
     outline: 0;
 }
 
-.customControl:focus,
-.customControl {
+.customControl,
+.customControl:focus {
     background: #FCFBFB;
     color: #7500ff;
     border: 0;
     box-shadow: none;
     border-radius: 0;
     font-size: 20px;
-    padding: 30px 10px;
+    padding: 15px 10px;
+    height: auto;
+}
+
+select.customControl {
     height: 60px;
 }
 
