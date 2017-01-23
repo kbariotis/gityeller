@@ -94,7 +94,7 @@ export default class App extends React.Component {
                     id="repo"
                     type="text"
                     onKeyUp={this.repoKeyup.bind(this)}
-                    placeholder="e.g. https://github.com/kbariotis/throw.js"
+                    placeholder="https://github.com/expressjs/express"
                     autoComplete="off"
                     />
                   <div className={`row ${styles.actions}`}>
@@ -158,6 +158,7 @@ export default class App extends React.Component {
                     id="email"
                     type="text"
                     onKeyUp={this.validateEmail.bind(this)}
+                    placeholder="konmpar@gmail.com"
                     autoComplete="off"
                   />
 
