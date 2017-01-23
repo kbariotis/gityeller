@@ -128,13 +128,14 @@ const run = db => {
     }
 
     return editItem(item)
-      .then(() => cursor.nextObject(processItem))
-      .catch(() => cursor.nextObject(processItem));
+      .then(() => cursor.nextObject())
+      .then(i => processItem(i));
   }
 
   return cursor
     .nextObject()
-    .then(item => processItem(item));
+    .then(item => processItem(item))
+    .catch(() => run(db));
 };
 
 MongoClient.connect(config.get('mongo.uri'))
