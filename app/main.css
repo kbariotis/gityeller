@@ -7,7 +7,7 @@ body {
     background: url(./background.svg);
     background-size: cover;
     color: #FCFBFB;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 a {
@@ -46,6 +46,14 @@ label {
 
 .footer {
   margin-top: 50px;
+}
+
+.logo {
+  background: url(./logo.svg);
+  background-repeat: no-repeat;
+  height: 150px;
+  width: 150px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {

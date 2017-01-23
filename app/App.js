@@ -15,7 +15,9 @@ export default class App extends React.Component {
       activeStep: 1
     };
   }
-  keyup(e) {
+  repoKeyup(e) {
+    e.preventDefault();
+
     const githubUrl = gh(e.target.value);
 
     if (githubUrl) {
@@ -23,12 +25,16 @@ export default class App extends React.Component {
         repo: githubUrl.repo
       });
     }
+
+    if (e.keyCode === 13) {
+      this.getLabels();
+    }
   }
-  getLabels(e) {
-    e.preventDefault();
+  getLabels() {
+    this.setState({activeStep: ++this.state.activeStep});
 
     axios.get(`/api/repo/${this.state.repo}/labels`)
-      .then((res) => this.setState({labels: res.data, activeStep: ++this.state.activeStep}));
+      .then((res) => this.setState({labels: res.data}));
   }
   subscribe(e) {
     e.preventDefault();
@@ -40,9 +46,7 @@ export default class App extends React.Component {
     })
     .then(() => this.setState({activeStep: ++this.state.activeStep}));
   }
-  setEmail(e) {
-    e.preventDefault();
-
+  setEmail() {
     this.setState({
       activeStep: ++this.state.activeStep
     });
@@ -51,6 +55,12 @@ export default class App extends React.Component {
     if (isEmail(e.target.value)) {
       this.setState({
         email: e.target.value
+      });
+    }
+
+    if (e.keyCode === 13) {
+      this.setState({
+        activeStep: ++this.state.activeStep
       });
     }
   }
@@ -75,7 +85,7 @@ export default class App extends React.Component {
       <div>
         <div className="row">
           <div className="col-sm-4 col-sm-offset-4">
-            <form className={styles.stepsContainer}>
+            <div className={styles.stepsContainer}>
               <div className={this.state.activeStep === 1 ? styles.activeStep : styles.inactiveStep}>
                 <div className="form-group">
                   <label htmlFor="repo">Repository URL</label>
@@ -83,7 +93,7 @@ export default class App extends React.Component {
                     className={`form-control ${styles.customControl}`}
                     id="repo"
                     type="text"
-                    onKeyUp={this.keyup.bind(this)}
+                    onKeyUp={this.repoKeyup.bind(this)}
                     placeholder="e.g. https://github.com/kbariotis/throw.js"
                     autoComplete="off"
                     />
@@ -112,6 +122,9 @@ export default class App extends React.Component {
               <div className={this.state.activeStep === 2 ? styles.activeStep : styles.inactiveStep}>
                 <div className="form-group">
                   <label htmlFor="labels">Repo</label>
+                  {this.state.labels.length === 0 &&
+                    <b>Wait for it ...</b>
+                  }
                   {this.state.labels.length > 0 &&
                     <select
                       className={`form-control ${styles.customControl}`}
@@ -205,7 +218,7 @@ export default class App extends React.Component {
                     </div>
                   </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
