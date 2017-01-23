@@ -40,7 +40,7 @@ Cheers!<br/>
 GitYeller
 
 <hr>
-<small>Unsubscribe from future emails like this, <a href="https://gityeller.com/unsubscribe/${subscription._id}">here</a>.</small>
+<small>Unsubscribe from future emails like this, <a href="https://gityeller.com/api/unsubscribe/${subscription._id}">here</a>.</small>
     `
   };
 

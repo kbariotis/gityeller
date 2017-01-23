@@ -3,23 +3,15 @@ const router = express.Router();
 const logger = require('winston');
 const config = require('config');
 const GitHubApi = require('github');
-const MongoClient = require('mongodb').MongoClient;
 const throwjs = require('throw.js');
 const Joi = require('joi');
+const mongo = require('../services/mongo');
 
 const subscriptionSchema = Joi.object().keys({
   label: Joi.string().required(),
   repo: Joi.string().required(),
   email: Joi.string().email().required()
 });
-
-let database = null;
-
-MongoClient.connect(config.get('mongo.uri'))
-  .then((db) => {
-    database = db;
-  })
-  .catch((err) => logger.error(err));
 
 const github = new GitHubApi({
   debug: config.get('github.debug'),
@@ -50,7 +42,7 @@ router.post('/subscriptions', (req, res, next) => {
   if (result.error) {
     next(new throwjs.BadRequest('Validation error'));
   } else {
-    database
+    mongo.database
     .collection('subscriptions')
     .insert({
       email: result.value.email,
@@ -62,6 +54,18 @@ router.post('/subscriptions', (req, res, next) => {
     .then(() => res.json({ok: true}))
     .catch(() => next(new throwjs.BadRequest('Database error')));
   }
+});
+
+router.get('/unsubscribe/:id', (req, res, next) => {
+  logger.info(`Canceling subscription for ${req.params.id}`);
+
+  mongo.database
+  .collection('subscriptions')
+  .findOneAndDelete({
+    _id: new mongo.ObjectID(req.params.id)
+  })
+  .then(() => res.json({ok: true, message: 'You have been unsubscribed.'}))
+  .catch(() => next(new throwjs.BadRequest('Database error')));
 });
 
 router.use((err, req, res, next) => {
