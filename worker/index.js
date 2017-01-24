@@ -1,5 +1,6 @@
 /* global: Promise */
-const MongoClient = require('mongodb').MongoClient;
+const MongoDB = require('mongodb');
+const MongoClient = MongoDB.MongoClient;
 const GitHubApi = require('github');
 const config = require('config');
 const logger = require('winston');
@@ -88,26 +89,26 @@ const editItem = item => {
           d.setSeconds(d.getSeconds() + 1);
 
           database.collection('subscriptions').update({
-            email: item.email,
-            repo: item.repo
+            _id: new MongoDB.ObjectID(item._id)
           }, {
             $set: {
               'since': d.toISOString()
             }
           });
 
-          res.forEach(issue => sendEmail(item, issue));
+          res
+            .filter((item) => new Date(item.created_at) < d)
+            .forEach(issue => sendEmail(item, issue));
         }
-
-        database.collection('subscriptions').update({
-          email: item.email,
-          repo: item.repo
-        }, {
-          $set: {
-            'etag': res.meta.etag
-          }
-        });
       }
+
+      database.collection('subscriptions').update({
+        _id: new MongoDB.ObjectID(item._id)
+      }, {
+        $set: {
+          'etag': res.meta.etag
+        }
+      });
 
       setTimeout(resolve, 3000);
     });
