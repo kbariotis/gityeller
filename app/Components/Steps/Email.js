@@ -1,7 +1,7 @@
 import React from 'react';
 import isEmail from 'validator/lib/isEmail';
 
-export default class App extends React.Component {
+export default class EmailStep extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,3 +66,11 @@ export default class App extends React.Component {
     );
   }
 }
+
+EmailStep.propTypes = {
+  activeStep: React.PropTypes.number.isRequired,
+  next: React.PropTypes.func.isRequired,
+  styles: React.PropTypes.object.isRequired,
+  startOver: React.PropTypes.func.isRequired
+};
+

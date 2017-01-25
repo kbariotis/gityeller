@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export default class App extends React.Component {
+export default class LabelStep extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,3 +72,11 @@ export default class App extends React.Component {
     );
   }
 }
+
+LabelStep.propTypes = {
+  activeStep: React.PropTypes.number.isRequired,
+  next: React.PropTypes.func.isRequired,
+  styles: React.PropTypes.object.isRequired,
+  repo: React.PropTypes.string.isRequired,
+  startOver: React.PropTypes.func.isRequired
+};

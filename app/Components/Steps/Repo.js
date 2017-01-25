@@ -1,7 +1,7 @@
 import React from 'react';
 import gh from 'parse-github-url';
 
-export default class App extends React.Component {
+export default class RepoStep extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,3 +61,9 @@ export default class App extends React.Component {
     );
   }
 }
+
+RepoStep.propTypes = {
+  activeStep: React.PropTypes.number.isRequired,
+  next: React.PropTypes.func.isRequired,
+  styles: React.PropTypes.object.isRequired
+};

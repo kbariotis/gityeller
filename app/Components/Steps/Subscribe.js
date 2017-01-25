@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export default class App extends React.Component {
+export default class SubscribeStep extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,3 +52,13 @@ export default class App extends React.Component {
     );
   }
 }
+
+SubscribeStep.propTypes = {
+  activeStep: React.PropTypes.number.isRequired,
+  repo: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired,
+  email: React.PropTypes.string.isRequired,
+  next: React.PropTypes.func.isRequired,
+  styles: React.PropTypes.object.isRequired,
+  startOver: React.PropTypes.func.isRequired
+};
