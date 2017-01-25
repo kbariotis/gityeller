@@ -42,9 +42,9 @@ export default class ConfirmStep extends React.Component {
 
 ConfirmStep.propTypes = {
   activeStep: React.PropTypes.number.isRequired,
-  repo: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string.isRequired,
-  email: React.PropTypes.string.isRequired,
+  repo: React.PropTypes.string,
+  label: React.PropTypes.string,
+  email: React.PropTypes.string,
   next: React.PropTypes.func.isRequired,
   styles: React.PropTypes.object.isRequired,
   startOver: React.PropTypes.func.isRequired

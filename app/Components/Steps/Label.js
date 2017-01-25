@@ -77,6 +77,6 @@ LabelStep.propTypes = {
   activeStep: React.PropTypes.number.isRequired,
   next: React.PropTypes.func.isRequired,
   styles: React.PropTypes.object.isRequired,
-  repo: React.PropTypes.string.isRequired,
+  repo: React.PropTypes.string,
   startOver: React.PropTypes.func.isRequired
 };
