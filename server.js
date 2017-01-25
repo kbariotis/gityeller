@@ -25,9 +25,10 @@ app.use('/api', apiRouter);
 
 if (isDeveloping) {
   const compiler = webpack(config);
+  console.log(config.output.publicPath)
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    contentBase: 'src',
+    contentBase: 'app',
     stats: {
       colors: true,
       hash: false,
