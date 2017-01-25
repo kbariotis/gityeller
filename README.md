@@ -26,8 +26,11 @@ GitYeller is divided in two parts.
 Once you have cloned the repository:
 
 1) Update `config/default.json`. All you need for the frontend app is the Mongo URI
+
 2) run `npm install` to install dependencies
+
 3) run `npm run dev` to run the development server
+
 4) run `node worker` to run the worker. Update config first.
 
 ## Contribute
