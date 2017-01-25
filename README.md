@@ -1,5 +1,5 @@
 <img 
-    src="https://raw.githubusercontent.com/kbariotis/gityeller/master/app/logo.svg" 
+    src="https://rawgit.com/kbariotis/gityeller/master/app/logo.svg" 
     alt="GitYeller"
     style="margin: 0 auto; width: 100px;"
     >
