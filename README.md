@@ -1,8 +1,10 @@
-<img 
-    src="https://rawgit.com/kbariotis/gityeller/master/app/logo.svg" 
-    alt="GitYeller"
-    style="margin: 0 auto; width: 100px;"
-    >
+<p align="center">
+    <img 
+        src="https://rawgit.com/kbariotis/gityeller/master/app/logo.svg" 
+        alt="GitYeller"
+        width="100px"
+        >
+</p>
 
 # GitYeller
 Subscribe to your favorite Github repositories and get an email once there is
