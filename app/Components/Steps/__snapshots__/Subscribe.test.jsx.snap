@@ -1,0 +1,11 @@
+exports[`test Take Snapshot 1`] = `
+<div
+  className={undefined}>
+  <div>
+    <br />
+    <b>
+      Wait for it ...
+    </b>
+  </div>
+</div>
+`;

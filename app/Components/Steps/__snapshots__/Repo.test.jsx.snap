@@ -1,0 +1,26 @@
+exports[`test Take Snapshot 1`] = `
+<div
+  className={undefined}>
+  <div
+    className="form-group">
+    <label
+      htmlFor="repo">
+      Repository URL
+    </label>
+    <input
+      autoComplete="off"
+      className="form-control undefined"
+      id="repo"
+      onKeyUp={[Function]}
+      placeholder="https://github.com/expressjs/express"
+      type="text" />
+    <div
+      className="row undefined">
+      <div
+        className="col-xs-6 col-xs-offset-6 text-right">
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;

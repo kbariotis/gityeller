@@ -22,10 +22,10 @@ export default class EmailStep extends React.Component {
       this.setState({
         email: e.target.value
       });
-    }
 
-    if (e.keyCode === 13) {
-      this.next();
+      if (e.keyCode === 13) {
+        this.next();
+      }
     }
   }
   render() {

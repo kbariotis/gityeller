@@ -12,18 +12,17 @@ export default class RepoStep extends React.Component {
     return this.props.activeStep === 1;
   }
   repoKeyup(e) {
-    e.preventDefault();
 
     const githubUrl = gh(e.target.value);
 
-    if (githubUrl) {
+    if (githubUrl.repo) {
       this.setState({
         repo: githubUrl.repo
       });
-    }
 
-    if (e.keyCode === 13 && this.state.repo) {
-      this.next();
+      if (e.keyCode === 13) {
+        this.next();
+      }
     }
   }
   next() {

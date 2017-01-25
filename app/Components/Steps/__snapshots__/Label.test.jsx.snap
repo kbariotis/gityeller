@@ -1,0 +1,29 @@
+exports[`test Take Snapshot 1`] = `
+<div
+  className={undefined}>
+  <div
+    className="form-group">
+    <label
+      htmlFor="labels">
+      Labels
+    </label>
+    <div>
+      <br />
+      <b>
+        Wait for it ...
+      </b>
+    </div>
+    <div
+      className="row undefined">
+      <div
+        className="col-xs-6">
+        <button
+          className="btn btn-default undefined"
+          onClick={[Function]}>
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
