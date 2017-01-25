@@ -1,5 +1,5 @@
 <img 
-    src="https://github.com/kbariotis/gityeller/blob/master/app/logo.svg" 
+    src="https://raw.githubusercontent.com/kbariotis/gityeller/master/app/logo.svg" 
     alt="GitYeller"
     style="margin: 0 auto; width: 100px;"
     >
@@ -13,15 +13,13 @@ I needed a way to watch out issues of common labels like "need help",
 
 [GitYeller](https://gityeller.com) is what I came up with.
 
+## Development
+
 GitYeller is divided in two parts. 
 
-The front server/client (`server` and `app` folders) application that uses 
-React/Webpack and Node.js.
+* The front server/client (`server` and `app` folders) application that uses React/Webpack and Node.js.
 
-The worker (`worker` folder) that constantly traverses the database and 
-check against Github's API.
-
-## Development
+* The worker (`worker` folder) that constantly traverses the database and check against Github's API.
 
 Once you have cloned the repository:
 
