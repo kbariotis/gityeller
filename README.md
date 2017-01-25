@@ -2,7 +2,7 @@
     <img 
         src="https://rawgit.com/kbariotis/gityeller/master/app/logo.svg" 
         alt="GitYeller"
-        width="100px"
+        width="250px"
         >
 </p>
 
