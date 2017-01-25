@@ -39,18 +39,29 @@ router.post('/subscriptions', (req, res, next) => {
   logger.info(`Creating subscription for ${req.body.email}`);
 
   const result = Joi.validate(req.body, subscriptionSchema);
+  const collection = mongo.database.collection('subscriptions');
 
   if (result.error) {
     next(new throwjs.BadRequest('Validation error'));
   } else {
-    mongo.database
-    .collection('subscriptions')
-    .insert({
+
+    collection.findOne({
       email: result.value.email,
       repo: result.value.repo,
-      since: new Date().toISOString(),
-      etag: null,
       label: result.value.label
+    })
+    .then((model) => {
+      if (model) {
+        return true;
+      } else {
+        return collection.insert({
+          email: result.value.email,
+          repo: result.value.repo,
+          since: new Date().toISOString(),
+          etag: null,
+          label: result.value.label
+        });
+      }
     })
     .then(() => res.json({ok: true}))
     .catch(() => next(new throwjs.BadRequest('Database error')));
