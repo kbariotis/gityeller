@@ -35,7 +35,7 @@ export default class App extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-sm-4 col-sm-offset-4">
+          <div className="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
             <div className={styles.stepsContainer}>
               <RepoStep
                 activeStep={this.state.activeStep}
