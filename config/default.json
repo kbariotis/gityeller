@@ -9,6 +9,6 @@
     "mailgun": {
         "token": "",
         "domain": "",
-        "test": true
+        "testmode": true
     }
 }
