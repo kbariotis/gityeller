@@ -32,7 +32,7 @@ Once you have cloned the repository:
 
 ## Contribute
 
-Contributions are welcomed! 
+Contributions are welcome! 
 
 Make sure that `npm test` passes and give me a [heads up](/issues) before you
 start writing code!
