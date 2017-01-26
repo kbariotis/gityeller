@@ -4,10 +4,6 @@ body {
 }
 
 body {
-    height: 0;
-    padding: 0;
-    margin: 50px 0;
-    background-image: url(./background.svg);
     color: #FCFBFB;
     font-size: 20px;
     font-family: "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
@@ -54,6 +50,7 @@ label {
 .footer {
     margin-top: 50px;
     font-size: 16px;
+    margin-bottom: 50px;
 }
 
 .logo {
