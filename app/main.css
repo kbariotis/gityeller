@@ -78,3 +78,52 @@ label {
   }
 
 }
+
+hr {
+  padding: 10px 0;
+  border-color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.social {
+  text-align: center;
+}
+.social-list__item,
+.social-list__item:focus,
+.social-list__item:visited,
+.social-list__item:active,
+.social-list__item:hover {
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+.social-list__item svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  fill: white;
+}
+.social-list__item--facebook {
+  background: #3b5998;
+  border: 1px solid #3b5998;
+}
+.social-list__item--facebook:hover {
+  background: white;
+  color: #3b5998;
+  fill: #3b5998;
+}
+.social-list__item--facebook:hover svg {
+  fill: #3b5998;
+}
+.social-list__item--twitter {
+  background: #55acee;
+  border: 1px solid #55acee;
+}
+.social-list__item--twitter:hover {
+  background: white;
+  color: #55acee;
+}
+.social-list__item--twitter:hover svg {
+  fill: #55acee;
+}
