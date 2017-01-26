@@ -35,7 +35,8 @@ export default class SubscribeStep extends React.Component {
         {!this.state.loading && this.state.success &&
           <div>
             <p className="text-center">
-              👏 &nbsp;Hey! You did it! 👏<br/>Now go get some work done. I will let you know once I've found a new issue!
+              👏 &nbsp;Hey! You did it! 👏<br/>I will let you know once I've found a new issue! If you like
+              what I did please do share it with your friends.
             </p>
             <div className={`row ${this.props.styles.actions}`}>
               <div className="col-sm-12 text-center">
