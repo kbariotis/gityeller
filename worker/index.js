@@ -144,8 +144,8 @@ Hello there!<br/><br/>
 I've found a new issue with label "${subscription.label}" from
 the ${subscription.repo} repository.<br/><br/>
 
-${issues.map(issue => `<a href="${issue.html_url}">${issue.title}</a><br/><br/>`)}
-
+${issues.map(issue => `<a href="${issue.html_url}">${issue.title}</a><br/>`)}
+<br/>
 Cheers!<br/>
 
 GitYeller
