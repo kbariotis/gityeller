@@ -14,6 +14,8 @@ export default class LabelStep extends React.Component {
   }
   componentDidUpdate(props) {
     if (this.stepLoaded() && props.activeStep !== this.props.activeStep) {
+      this.setState({labels: []});
+
       axios.get(`/api/repo/${this.props.repo}/labels`)
         .then((res) => this.setState({labels: res.data}))
         .catch(() => this.previous())
