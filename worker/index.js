@@ -27,6 +27,7 @@ github.authenticate({
   token: config.get('github.token')
 });
 
+const githubIssuesApi = github.issues;
 /**
  * Main run function that handles the infinite
  * loop over the database
@@ -35,52 +36,52 @@ const run = db => {
   const collection = db.collection('subscriptions');
   const cursor = collection.find({});
 
-  function processItem(item) {
+  function processItem(subscription) {
 
-    if (item === null) {
+    if (subscription === null) {
       logger.info('End of cursor');
       return run(db);
     } else {
-      logger.info(`Checking ${item.email} - ${item.repo} - ${item.label}`);
+      logger.info(`Checking ${subscription.email} - ${subscription.repo} - ${subscription.label}`);
     }
 
-    return editItem(item)
+    return editItem(subscription)
       .then(() => cursor.nextObject())
       .then(i => processItem(i));
   }
 
   return cursor
     .nextObject()
-    .then(item => processItem(item))
+    .then(subscription => processItem(subscription))
     .catch(() => run(db));
 };
 
 /**
- * Every item in the database goes through
+ * Every subscription in the database goes through
  * this function. Checks against GH for new
  * issues
  */
-const editItem = item => {
-  const [owner, repo] = item.repo.split('/');
+const editItem = subscription => {
+  const [owner, repo] = subscription.repo.split('/');
 
   const headers = {};
-  if (item.etag) {
-    headers['If-None-Match'] = item.etag;
+  if (subscription.etag) {
+    headers['If-None-Match'] = subscription.etag;
   }
 
   const options = {
     headers: headers,
     owner: owner,
     repo: repo,
-    labels: item.label,
+    labels: subscription.label,
     direction: 'desc'
   };
 
-  if (item.since) {
-    options.since = item.since;
+  if (subscription.since) {
+    options.since = subscription.since;
   }
-  return github.issues.getForRepo(options)
-    .then((response) => processGithubResponse(item, response))
+  return githubIssuesApi.getForRepo(options)
+    .then((response) => processGithubResponse(subscription, response))
     .catch((err) => logger.error(err))
 }
 
@@ -88,36 +89,55 @@ const editItem = item => {
  * Process GH response. Update DB
  * accordingly and send new mails
  */
-const processGithubResponse = (item, response) => {
+const processGithubResponse = (subscription, response) => {
   return new Promise((resolve, reject) => {
     logger.debug(response);
 
-    const collection = database.collection('subscriptions');
+    const subscriptionsCollection = database.collection('subscriptions');
+    const deliveriesCollection = database.collection('subscriptions');
+    const subscriptionId = new MongoDB.ObjectID(subscription._id);
 
     if (response.meta.status !== '304 Not Modified') {
       if (response.length) {
-        const d = new Date(response[0].created_at);
+        let issues = respose;
+        const d = new Date(issues.created_at); // most recent item first
         d.setSeconds(d.getSeconds() + 1);
 
-        collection.update({
-          _id: new MongoDB.ObjectID(item._id)
+        subscriptionsCollection.update({
+          _id: subscriptionId
         }, {
           $set: {
             'since': d.toISOString()
           }
         });
 
-        const issues = response.filter((item) => new Date(item.created_at) < d);
+        deliveriesCollection.find({
+          subscription_id: subscriptionId,
+          issue_number: {
+            $in: issues.map(issue => issue.number)
+          }
+        })
+          .then(results => {
 
-        sendEmail(item, issues)
-          .then((error) => issues.forEach((issue) => logger.info(`Send email for issue: ${issue.number} - Success!`)))
-          .catch(() => issues.forEach((issue) => logger.info(`Send email for issue: ${issue.number} - Error!`)))
-          .catch((error) => logger.error(error));
+            if (results.length) {
+              issues = issues.filter(issue => results.map(item => item.issue_number).indexOf(issue.number) > -1);
+            }
+
+            return sendEmail(subscription, issues)
+          })
+          .then(() => issues.forEach(issue => logger.info(`Send email for issue: ${issue.number} - Success!`)))
+          .then(body => issues.forEach(issue => deliveriesCollection.insert({
+            subscription_id: subscriptionId,
+            issue_number:  issue.number,
+            message_id: body.id
+          }))
+          .catch(error => logger.error(error))
+          .catch(() => issues.forEach(issue => logger.info(`Send email for issue: ${issue.number} - Error!`)));
       }
     }
 
-    collection.update({
-      _id: new MongoDB.ObjectID(item._id)
+    subscriptionsCollection.update({
+      _id: subscriptionId
     }, {
       $set: {
         'etag': response.meta.etag
