@@ -1,0 +1,22 @@
+exports[`test SendEmail 1`] = `
+Object {
+  "from": "no-reply@gityeller.com",
+  "html": "
+Hello there!<br/><br/>
+I\'ve found a new issue with label \"Need help\" from
+the throw.js repository.<br/><br/>
+
+<a href=\"https://github.com/octocat/Hello-World/issues/1347\">Found a bug</a><br/>
+<br/>
+Cheers!<br/>
+
+GitYeller
+
+<hr>
+<small>Unsubscribe from future emails like this, <a href=\"https://gityeller.com/api/unsubscribe/SOME+ID\">here</a>.</small>
+    ",
+  "o:testmode": true,
+  "subject": "Hey! I\'ve found a new issue",
+  "to": "konmpar@gmail.com",
+}
+`;

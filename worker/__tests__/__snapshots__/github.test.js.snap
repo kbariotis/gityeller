@@ -1,0 +1,34 @@
+exports[`test EditItem 1`] = `
+Object {
+  "direction": "desc",
+  "headers": Object {},
+  "labels": "Need help",
+  "owner": "kbariotis",
+  "repo": "throw.js",
+}
+`;
+
+exports[`test ProcessGithubResponse 1`] = `
+Object {
+  "_id": "SOME+ID",
+}
+`;
+
+exports[`test ProcessGithubResponse 2`] = `
+Object {
+  "issue_number": Object {
+    "$in": Array [
+      1347,
+    ],
+  },
+  "subscription_id": "SOME+ID",
+}
+`;
+
+exports[`test ProcessGithubResponse 3`] = `
+Object {
+  "issue_number": 1347,
+  "message_id": undefined,
+  "subscription_id": "SOME+ID",
+}
+`;
