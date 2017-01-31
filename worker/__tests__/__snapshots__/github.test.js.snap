@@ -10,7 +10,7 @@ Object {
 
 exports[`test ProcessGithubResponse 1`] = `
 Object {
-  "_id": "SOME+ID",
+  "_id": "5890a62b8acbfb45a3f57189",
 }
 `;
 
@@ -21,7 +21,7 @@ Object {
       1347,
     ],
   },
-  "subscription_id": "SOME+ID",
+  "subscription_id": "5890a62b8acbfb45a3f57189",
 }
 `;
 
@@ -29,6 +29,6 @@ exports[`test ProcessGithubResponse 3`] = `
 Object {
   "issue_number": 1347,
   "message_id": undefined,
-  "subscription_id": "SOME+ID",
+  "subscription_id": "5890a62b8acbfb45a3f57189",
 }
 `;

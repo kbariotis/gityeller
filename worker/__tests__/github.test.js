@@ -6,7 +6,7 @@ githubFixture.meta = {};
 githubFixture.meta.etag = 'EXAMPLE_ETAG';
 
 const fn = (results) => jest.fn(() => new Promise(resolve => resolve(results)));
-const findFn = fn([]);
+const findFn = jest.fn(() => ({toArray: fn([])}));
 const insertFn = fn({});
 const updateFn = fn({});
 const sendFn = fn({});
@@ -22,7 +22,7 @@ test('EditItem', () => {
     email: 'konmpar@gmail.com',
     repo: 'kbariotis/throw.js',
     label: 'Need help',
-    _id: 'SOME+ID'
+    _id: '5890a62b8acbfb45a3f57189'
   });
 
   expect(githubMock.issues.getForRepo.mock.calls[0][0]).toMatchSnapshot()
@@ -38,7 +38,7 @@ test('ProcessGithubResponse', () => {
     email: 'konmpar@gmail.com',
     repo: 'kbariotis/throw.js',
     label: 'Need help',
-    _id: 'SOME+ID'
+    _id: '5890a62b8acbfb45a3f57189'
   }, githubFixture)
   .then(() => expect(updateFn.mock.calls[0][0]).toMatchSnapshot())
 });
@@ -53,7 +53,7 @@ test('ProcessGithubResponse', () => {
     email: 'konmpar@gmail.com',
     repo: 'kbariotis/throw.js',
     label: 'Need help',
-    _id: 'SOME+ID'
+    _id: '5890a62b8acbfb45a3f57189'
   }, githubFixture)
   .then(() => expect(findFn.mock.calls[0][0]).toMatchSnapshot())
 });
@@ -68,7 +68,7 @@ test('ProcessGithubResponse', () => {
     email: 'konmpar@gmail.com',
     repo: 'kbariotis/throw.js',
     label: 'Need help',
-    _id: 'SOME+ID'
+    _id: '5890a62b8acbfb45a3f57189'
   }, githubFixture)
   .then(() => expect(insertFn.mock.calls[0][0]).toMatchSnapshot())
 });

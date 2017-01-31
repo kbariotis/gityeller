@@ -66,44 +66,39 @@ class Worker {
       const responseStatus = response.meta.status;
       const responseLength = response.length;
       const responseETag = response.meta.etag;
+      const issues = response;
+      const updateSubscriptionPayload = {
+        'etag': responseETag
+      };
 
-      if (responseStatus !== '304 Not Modified' && responseLength) {
-        let issues = response;
+      if (responseLength) {
         const d = new Date(issues[0].created_at); // most recent item first
         d.setSeconds(d.getSeconds() + 1);
-
-        return this.subscriptionsCollection.update({
-          _id: subscriptionId
-        }, {
-          $set: {
-            'since': d.toISOString()
-          }
-        })
-        .then(() => this.deliveriesCollection.find({
-          subscription_id: subscriptionId,
-          issue_number: {
-            $in: issues.map(issue => issue.number)
-          }
-        }).toArray())
-        .then(results => this.filterIssues(issues, results))
-        .then(filteredIssues => this.mailer.sendEmail(subscription, filteredIssues))
-        .then(body => issues.forEach(issue => this.deliveriesCollection.insert({
-          subscription_id: subscriptionId,
-          issue_number:  issue.number,
-          message_id: body.id
-        })))
-        .catch(error => logger.error(error))
-        .then(() => setTimeout(resolve, 3000));
+        updateSubscriptionPayload.since = d.toISOString();
       } else {
-        return this.subscriptionsCollection.update({
-          _id: subscriptionId
-        }, {
-          $set: {
-            'etag': responseETag
-          }
-        })
-        .then(() => setTimeout(resolve, 3000));
+        return setTimeout(resolve, 3000);
       }
+
+      return this.subscriptionsCollection.update({
+        _id: subscriptionId
+      }, {
+        $set: updateSubscriptionPayload
+      })
+      .then(() => this.deliveriesCollection.find({
+        subscription_id: subscriptionId,
+        issue_number: {
+          $in: issues.map(issue => issue.number)
+        }
+      }).toArray())
+      .then(results => this.filterIssues(issues, results))
+      .then(filteredIssues => this.mailer.sendEmail(subscription, filteredIssues))
+      .then(body => issues.forEach(issue => this.deliveriesCollection.insert({
+        subscription_id: subscriptionId,
+        issue_number:  issue.number,
+        message_id: body.id
+      })))
+      .catch(error => logger.error(error))
+      .then(() => setTimeout(resolve, 3000));
     });
   }
 }
