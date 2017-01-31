@@ -3,6 +3,7 @@
 const config = require('config');
 const logger = require('winston');
 const MongoDB = require('mongodb');
+const BPromise = require('bluebird');
 
 class Worker {
   constructor(github, database, mailer) {
@@ -48,13 +49,6 @@ class Worker {
   }
 
   /**
-   * Remove those from issues that exists in sent
-   */
-  filterIssues(issues, sent) {
-    return issues.filter(issue => sent.map(item => item.issue_number).indexOf(issue.number) === -1);
-  }
-
-  /**
    * Process GH response. Update DB
    * accordingly and send new mails
    */
@@ -75,31 +69,51 @@ class Worker {
         const d = new Date(issues[0].created_at); // most recent item first
         d.setSeconds(d.getSeconds() + 1);
         updateSubscriptionPayload.since = d.toISOString();
-      } else {
-        return setTimeout(resolve, 3000);
-      }
 
-      return this.subscriptionsCollection.update({
-        _id: subscriptionId
-      }, {
-        $set: updateSubscriptionPayload
-      })
-      .then(() => this.deliveriesCollection.find({
-        subscription_id: subscriptionId,
-        issue_number: {
-          $in: issues.map(issue => issue.number)
-        }
-      }).toArray())
-      .then(results => this.filterIssues(issues, results))
-      .then(filteredIssues => this.mailer.sendEmail(subscription, filteredIssues))
-      .then(body => issues.forEach(issue => this.deliveriesCollection.insert({
+        return this.subscriptionsCollection.update({
+          _id: subscriptionId
+        }, {
+          $set: updateSubscriptionPayload
+        })
+        .then(() => this.deliveriesCollection.find({
+          subscription_id: subscriptionId,
+          issue_number: {
+            $in: issues.map(issue => issue.number)
+          }
+        }).toArray())
+        .then(results => this.filterIssues(issues, results))
+        .then(filteredIssues => {
+          return this.mailer.sendEmail(subscription, filteredIssues)
+            .then(body => this.storeDeliveries(filteredIssues, subscriptionId, body.id))
+        })
+        .catch(error => logger.error(error))
+        .then(() => setTimeout(resolve, 3000));
+      } else {
+        return this.subscriptionsCollection.update({
+          _id: subscriptionId
+        }, {
+          $set: updateSubscriptionPayload
+        })
+        .then(() => setTimeout(resolve, 3000));
+      }
+    });
+  }
+
+  /**
+  * Remove those from issues that exists in sent
+  */
+  filterIssues(issues, sent) {
+    return issues.filter(issue => sent.map(item => item.issue_number).indexOf(issue.number) === -1);
+  }
+
+  storeDeliveries(issues, subscriptionId, emailId) {
+    return BPromise.all([
+      issues.map(issue => this.deliveriesCollection.insert({
         subscription_id: subscriptionId,
         issue_number:  issue.number,
-        message_id: body.id
-      })))
-      .catch(error => logger.error(error))
-      .then(() => setTimeout(resolve, 3000));
-    });
+        message_id: emailId
+      }))
+    ]);
   }
 }
 
