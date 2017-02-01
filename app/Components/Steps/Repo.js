@@ -12,7 +12,6 @@ export default class RepoStep extends React.Component {
     return this.props.activeStep === 1;
   }
   repoKeyup(e) {
-
     const githubUrl = gh(e.target.value);
 
     if (githubUrl.repo) {

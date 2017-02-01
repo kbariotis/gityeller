@@ -1,7 +1,4 @@
 import React from 'react';
-import gh from 'parse-github-url';
-import axios from 'axios';
-import isEmail from 'validator/lib/isEmail';
 
 import styles from './App.css';
 

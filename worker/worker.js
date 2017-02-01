@@ -103,7 +103,7 @@ class Worker {
   sendEmails(subscription, issues) {
     if (issues.length) {
       return this.mailer.sendEmail(subscription, issues)
-        .then(body => this.storeDeliveries(issues, subscription['_id'], body.id));
+        .then(body => this.storeDeliveries(issues, subscription._id, body.id));
     }
 
     return true;

@@ -9,30 +9,30 @@ export default class LabelStep extends React.Component {
       labelChosen: ''
     };
   }
-  stepLoaded() {
-    return this.props.activeStep === 2;
-  }
   componentDidUpdate(props) {
     if (this.stepLoaded() && props.activeStep !== this.props.activeStep) {
       this.setState({labels: []});
 
       axios.get(`/api/repo/${this.props.repo}/labels`)
         .then((res) => this.setState({labels: res.data}))
-        .catch(() => this.previous())
+        .catch(() => this.previous());
     }
+  }
+  stepLoaded() {
+    return this.props.activeStep === 2;
   }
   chooseLabel(e) {
     if (e.target.value) {
       this.props.next({
         labelChosen: e.target.value,
         activeStep: this.props.activeStep + 1
-      })
+      });
     }
   }
   previous() {
     this.props.next({
       activeStep: this.props.activeStep - 1
-    })
+    });
   }
   render() {
     return (

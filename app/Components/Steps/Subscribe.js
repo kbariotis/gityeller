@@ -9,9 +9,6 @@ export default class SubscribeStep extends React.Component {
       success: false
     };
   }
-  stepLoaded() {
-    return this.props.activeStep === 5;
-  }
   componentDidUpdate(props) {
     if (this.stepLoaded() && props.activeStep !== this.props.activeStep) {
       axios.post('/api/subscriptions', {
@@ -22,6 +19,9 @@ export default class SubscribeStep extends React.Component {
       .then(() => this.setState({loading: false, success: true}))
       .catch(() => this.setState({loading: false, success: false}));
     }
+  }
+  stepLoaded() {
+    return this.props.activeStep === 5;
   }
   render() {
     return (
@@ -58,6 +58,7 @@ SubscribeStep.propTypes = {
   activeStep: React.PropTypes.number.isRequired,
   repo: React.PropTypes.string,
   label: React.PropTypes.string,
+  labelChosen: React.PropTypes.string,
   email: React.PropTypes.string,
   next: React.PropTypes.func.isRequired,
   styles: React.PropTypes.object.isRequired,

@@ -44,6 +44,7 @@ ConfirmStep.propTypes = {
   activeStep: React.PropTypes.number.isRequired,
   repo: React.PropTypes.string,
   label: React.PropTypes.string,
+  labelChosen: React.PropTypes.string,
   email: React.PropTypes.string,
   next: React.PropTypes.func.isRequired,
   styles: React.PropTypes.object.isRequired,
