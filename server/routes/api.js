@@ -6,6 +6,17 @@ const GitHubApi = require('github');
 const throwjs = require('throw.js');
 const Joi = require('joi');
 const mongo = require('../services/mongo');
+const createMailer = require('../../worker/mailer');
+
+/**
+ * Mailgun initialization
+ */
+const mailgun = require('mailgun-js')({
+  apiKey: config.get('mailgun.token'),
+  domain: config.get('mailgun.domain')
+});
+
+const mailer = createMailer(mailgun);
 
 const subscriptionSchema = Joi.object().keys({
   label: Joi.string().required(),
@@ -63,6 +74,7 @@ router.post('/subscriptions', (req, res, next) => {
         is_enabled: false
       });
     })
+    .then((results) => mailer.sendVerificationEmail(results.ops[0]))
     .then(() => res.json({ok: true}))
     .catch(() => next(new throwjs.BadRequest('Database error')));
   }
