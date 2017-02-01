@@ -13,9 +13,13 @@ class Worker {
   }
 
   run(subscription) {
-    return this.editItem(subscription)
-      .then((response) => this.processGithubResponse(subscription, response))
-      .catch((err) => logger.error(err));
+    if (!!subscription.is_enabled) {
+      return this.makeGithubRequest(subscription)
+        .then((response) => this.processGithubResponse(subscription, response))
+        .catch((err) => logger.error(err));
+    }
+
+    return BPromise.resolve();
   }
 
   /**
@@ -23,7 +27,7 @@ class Worker {
   * this function. Checks against GH for new
   * issues
   */
-  editItem(subscription) {
+  makeGithubRequest(subscription) {
     const [owner, repo] = subscription.repo.split('/');
 
     const headers = {};

@@ -13,10 +13,10 @@ const mailerMock = {sendEmail: sendFn};
 const githubMock = {issues: {getForRepo: jest.fn(() => new Promise(resolve => resolve(githubFixture)))}};
 const databaseMock = {collection: jest.fn(() => ({find: findFn, update: updateFn, insert: insertFn}))};
 
-test('EditItem', () => {
+test('MakeGithubRequest', () => {
   const worker = createWorker(githubMock, databaseMock, mailerMock);
 
-  worker.editItem({
+  worker.makeGithubRequest({
     email: 'konmpar@gmail.com',
     repo: 'kbariotis/throw.js',
     label: 'Need help',

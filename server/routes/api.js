@@ -44,7 +44,6 @@ router.post('/subscriptions', (req, res, next) => {
   if (result.error) {
     next(new throwjs.BadRequest('Validation error'));
   } else {
-
     collection.findOne({
       email: result.value.email,
       repo: result.value.repo,
@@ -53,15 +52,16 @@ router.post('/subscriptions', (req, res, next) => {
     .then((model) => {
       if (model) {
         return true;
-      } else {
-        return collection.insert({
-          email: result.value.email,
-          repo: result.value.repo,
-          since: new Date().toISOString(),
-          etag: null,
-          label: result.value.label
-        });
       }
+
+      return collection.insert({
+        email: result.value.email,
+        repo: result.value.repo,
+        since: new Date().toISOString(),
+        etag: null,
+        label: result.value.label,
+        is_enabled: false
+      });
     })
     .then(() => res.json({ok: true}))
     .catch(() => next(new throwjs.BadRequest('Database error')));
@@ -77,6 +77,22 @@ router.get('/unsubscribe/:id', (req, res, next) => {
     _id: new mongo.ObjectID(req.params.id)
   })
   .then(() => res.json({ok: true, message: 'You have been unsubscribed.'}))
+  .catch(() => next(new throwjs.BadRequest('Database error')));
+});
+
+router.get('/verify/:id', (req, res, next) => {
+  logger.info(`Verifying subscription for ${req.params.id}`);
+
+  mongo.database
+  .collection('subscriptions')
+  .findOneAndUpdate({
+    _id: new mongo.ObjectID(req.params.id)
+  }, {
+    $set: {
+      is_enabled: true
+    }
+  })
+  .then(() => res.json({ok: true, message: 'You are now verified.'}))
   .catch(() => next(new throwjs.BadRequest('Database error')));
 });
 
