@@ -83,3 +83,26 @@ test('FilterIssues', () => {
 
   expect(results.length).toBe(1);
 });
+
+test('SendEmails', () => {
+  const worker = createWorker(githubMock, databaseMock, mailerMock);
+
+  return worker.sendEmails({_id: '5890a62b8acbfb45a3f57189'}, githubFixture)
+    .then(() => expect(sendFn).toBeCalled());
+});
+
+test('SendEmails', () => {
+  const worker = createWorker(githubMock, databaseMock, mailerMock);
+
+  return worker.sendEmails({_id: '5890a62b8acbfb45a3f57189'}, githubFixture)
+    .then(() => expect(insertFn).toBeCalled());
+});
+
+test('SendEmails', () => {
+  const worker = createWorker(githubMock, databaseMock, mailerMock);
+
+  worker.sendEmails({_id: '5890a62b8acbfb45a3f57189'}, []);
+
+  sendFn.mockClear();
+  expect(sendFn.mock.calls.length).toBe(0);
+});

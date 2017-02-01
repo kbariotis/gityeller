@@ -79,14 +79,7 @@ class Worker {
           }
         }).toArray())
         .then(results => this.filterIssues(issues, results))
-        .then(filteredIssues => {
-          if (filteredIssues.length) {
-            return this.mailer.sendEmail(subscription, filteredIssues)
-              .then(body => this.storeDeliveries(filteredIssues, subscriptionId, body.id));
-          }
-
-          return true;
-        })
+        .then(filteredIssues => this.sendEmails(subscription, filteredIssues))
         .catch(error => logger.error(error))
         .then(() => setTimeout(resolve, 3000));
       }
@@ -105,6 +98,15 @@ class Worker {
   */
   filterIssues(issues, sent) {
     return issues.filter(issue => sent.map(item => item.issue_number).indexOf(issue.number) === -1);
+  }
+
+  sendEmails(subscription, issues) {
+    if (issues.length) {
+      return this.mailer.sendEmail(subscription, issues)
+        .then(body => this.storeDeliveries(issues, subscription['_id'], body.id));
+    }
+
+    return true;
   }
 
   storeDeliveries(issues, subscriptionId, emailId) {
