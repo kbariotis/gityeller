@@ -4,7 +4,7 @@ const MongoClient = MongoDB.MongoClient;
 const GitHubApi = require('github');
 const config = require('config');
 const logger = require('winston');
-const createMailer = require('./mailer');
+const createMailer = require('../shared/mailer');
 const createWorker = require('./worker');
 
 /**

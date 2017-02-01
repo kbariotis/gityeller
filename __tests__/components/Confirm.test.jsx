@@ -1,11 +1,11 @@
 import React from 'react';
-import Subscribe from './Subscribe';
+import Confirm from './../../app/Components/Steps/Confirm';
 import renderer from 'react-test-renderer';
 
 test('Take Snapshot', () => {
   const component = renderer.create(
-    <Subscribe
-      activeStep={5}
+    <Confirm
+      activeStep={4}
       repo="https://github.com/kbariotis/ansible-nodejs-digitalocean"
       label="enhancement"
       email="konmpar@gmail.com"

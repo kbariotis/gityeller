@@ -1,4 +1,4 @@
-const createMailer = require('./../mailer');
+const createMailer = require('../shared/mailer');
 const githubFixture = require('../fixtures/github.response');
 
 let response = {};

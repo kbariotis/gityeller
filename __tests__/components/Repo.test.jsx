@@ -1,5 +1,5 @@
 import React from 'react';
-import Repo from './Repo';
+import Repo from './../../app/Components/Steps/Repo';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 

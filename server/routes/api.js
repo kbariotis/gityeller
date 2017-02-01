@@ -6,6 +6,17 @@ const GitHubApi = require('github');
 const throwjs = require('throw.js');
 const Joi = require('joi');
 const mongo = require('../services/mongo');
+const createMailer = require('../../shared/mailer');
+
+/**
+ * Mailgun initialization
+ */
+const mailgun = require('mailgun-js')({
+  apiKey: config.get('mailgun.token'),
+  domain: config.get('mailgun.domain')
+});
+
+const mailer = createMailer(mailgun);
 
 const subscriptionSchema = Joi.object().keys({
   label: Joi.string().required(),
@@ -44,7 +55,6 @@ router.post('/subscriptions', (req, res, next) => {
   if (result.error) {
     next(new throwjs.BadRequest('Validation error'));
   } else {
-
     collection.findOne({
       email: result.value.email,
       repo: result.value.repo,
@@ -53,15 +63,17 @@ router.post('/subscriptions', (req, res, next) => {
     .then((model) => {
       if (model) {
         return true;
-      } else {
-        return collection.insert({
-          email: result.value.email,
-          repo: result.value.repo,
-          since: new Date().toISOString(),
-          etag: null,
-          label: result.value.label
-        });
       }
+
+      return collection.insert({
+        email: result.value.email,
+        repo: result.value.repo,
+        since: new Date().toISOString(),
+        etag: null,
+        label: result.value.label,
+        is_enabled: false
+      })
+        .then(results => mailer.sendVerificationEmail(results.ops[0]));
     })
     .then(() => res.json({ok: true}))
     .catch(() => next(new throwjs.BadRequest('Database error')));
@@ -77,6 +89,22 @@ router.get('/unsubscribe/:id', (req, res, next) => {
     _id: new mongo.ObjectID(req.params.id)
   })
   .then(() => res.json({ok: true, message: 'You have been unsubscribed.'}))
+  .catch(() => next(new throwjs.BadRequest('Database error')));
+});
+
+router.get('/verify/:id', (req, res, next) => {
+  logger.info(`Verifying subscription for ${req.params.id}`);
+
+  mongo.database
+  .collection('subscriptions')
+  .findOneAndUpdate({
+    _id: new mongo.ObjectID(req.params.id)
+  }, {
+    $set: {
+      is_enabled: true
+    }
+  })
+  .then(() => res.json({ok: true, message: 'You are now verified.'}))
   .catch(() => next(new throwjs.BadRequest('Database error')));
 });
 

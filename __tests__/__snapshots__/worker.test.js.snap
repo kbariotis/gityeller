@@ -1,4 +1,4 @@
-exports[`test EditItem 1`] = `
+exports[`test MakeGithubRequest 1`] = `
 Object {
   "direction": "desc",
   "headers": Object {},

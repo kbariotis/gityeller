@@ -1,14 +1,13 @@
 import React from 'react';
-import Confirm from './Confirm';
+import Label from './../../app/Components/Steps/Label';
 import renderer from 'react-test-renderer';
+import {shallow} from 'enzyme';
 
 test('Take Snapshot', () => {
   const component = renderer.create(
-    <Confirm
-      activeStep={4}
-      repo="https://github.com/kbariotis/ansible-nodejs-digitalocean"
-      label="enhancement"
-      email="konmpar@gmail.com"
+    <Label
+      activeStep={2}
+      repo="kbariotis/ansible-nodejs-digitalocean"
       next={function(){}}
       startOver={function(){}}
       styles={{}}/>
