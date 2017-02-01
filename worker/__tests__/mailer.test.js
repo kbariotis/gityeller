@@ -17,6 +17,6 @@ beforeEach(() => {
   }, githubFixture);
 
   response = sendFn.mock.calls[0][0];
-})
+});
 
 test('SendEmail', () => expect(response).toMatchSnapshot());

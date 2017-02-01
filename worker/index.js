@@ -37,13 +37,12 @@ const run = (db, worker) => {
   const cursor = collection.find({});
 
   function processItem(subscription) {
-
     if (subscription === null) {
       logger.info('End of cursor');
       return run(db, worker);
-    } else {
-      logger.info(`Checking ${subscription.email} - ${subscription.repo} - ${subscription.label}`);
     }
+
+    logger.info(`Checking ${subscription.email} - ${subscription.repo} - ${subscription.label}`);
 
     return worker.run(subscription)
       .then(() => cursor.nextObject())
@@ -62,7 +61,6 @@ const run = (db, worker) => {
  */
 MongoClient.connect(config.get('mongo.uri'))
   .then(db => {
-
     const mailer = createMailer(mailgun);
     const worker = createWorker(github, db, mailer);
 

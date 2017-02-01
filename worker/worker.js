@@ -1,13 +1,11 @@
 /* global: Promise */
 
-const config = require('config');
 const logger = require('winston');
 const MongoDB = require('mongodb');
 const BPromise = require('bluebird');
 
 class Worker {
   constructor(github, database, mailer) {
-
     this.githubIssuesApi = github.issues;
     this.subscriptionsCollection = database.collection('subscriptions');
     this.deliveriesCollection = database.collection('deliveries');
@@ -17,7 +15,7 @@ class Worker {
   run(subscription) {
     return this.editItem(subscription)
       .then((response) => this.processGithubResponse(subscription, response))
-      .catch((err) => logger.error(err))
+      .catch((err) => logger.error(err));
   }
 
   /**
@@ -53,11 +51,10 @@ class Worker {
    * accordingly and send new mails
    */
   processGithubResponse(subscription, response) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       logger.debug(response);
 
       const subscriptionId = new MongoDB.ObjectID(subscription._id);
-      const responseStatus = response.meta.status;
       const responseLength = response.length;
       const responseETag = response.meta.etag;
       const issues = response;
@@ -83,19 +80,23 @@ class Worker {
         }).toArray())
         .then(results => this.filterIssues(issues, results))
         .then(filteredIssues => {
-          return this.mailer.sendEmail(subscription, filteredIssues)
-            .then(body => this.storeDeliveries(filteredIssues, subscriptionId, body.id))
+          if (filteredIssues.length) {
+            return this.mailer.sendEmail(subscription, filteredIssues)
+              .then(body => this.storeDeliveries(filteredIssues, subscriptionId, body.id));
+          }
+
+          return true;
         })
         .catch(error => logger.error(error))
         .then(() => setTimeout(resolve, 3000));
-      } else {
-        return this.subscriptionsCollection.update({
-          _id: subscriptionId
-        }, {
-          $set: updateSubscriptionPayload
-        })
-        .then(() => setTimeout(resolve, 3000));
       }
+
+      return this.subscriptionsCollection.update({
+        _id: subscriptionId
+      }, {
+        $set: updateSubscriptionPayload
+      })
+        .then(() => setTimeout(resolve, 3000));
     });
   }
 
@@ -110,7 +111,7 @@ class Worker {
     return BPromise.all([
       issues.map(issue => this.deliveriesCollection.insert({
         subscription_id: subscriptionId,
-        issue_number:  issue.number,
+        issue_number: issue.number,
         message_id: emailId
       }))
     ]);

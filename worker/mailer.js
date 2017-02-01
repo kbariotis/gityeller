@@ -5,12 +5,10 @@ const logger = require('winston');
 
 class Mailer {
   constructor(mailgun) {
-
     this.mailgun = mailgun;
   }
 
   sendEmail(subscription, issues) {
-
     issues.forEach((issue) => logger.info(`Send email for issue: ${issue.number}`));
 
     const data = {
@@ -34,7 +32,6 @@ GitYeller
     `};
 
     return this.mailgun.messages().send(data);
-
   }
 }
 
