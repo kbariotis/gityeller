@@ -6,7 +6,7 @@ const GitHubApi = require('github');
 const throwjs = require('throw.js');
 const Joi = require('joi');
 const mongo = require('../services/mongo');
-const createMailer = require('../../worker/mailer');
+const createMailer = require('../../shared/mailer');
 
 /**
  * Mailgun initialization
@@ -72,9 +72,9 @@ router.post('/subscriptions', (req, res, next) => {
         etag: null,
         label: result.value.label,
         is_enabled: false
-      });
+      })
+        .then(results => mailer.sendVerificationEmail(results.ops[0]));
     })
-    .then((results) => mailer.sendVerificationEmail(results.ops[0]))
     .then(() => res.json({ok: true}))
     .catch(() => next(new throwjs.BadRequest('Database error')));
   }

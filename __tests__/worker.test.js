@@ -1,4 +1,4 @@
-const createWorker = require('./../worker');
+const createWorker = require('../worker/worker');
 const githubFixture = require('../fixtures/github.response.json');
 
 githubFixture.meta = {};

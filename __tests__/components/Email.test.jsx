@@ -1,5 +1,5 @@
 import React from 'react';
-import Email from './Email';
+import Email from '../../app/Components/Steps/Email';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
