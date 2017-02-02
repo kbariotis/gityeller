@@ -58,7 +58,8 @@
     height: auto;
 }
 
-select.customControl {
+select.customControl,
+select.customControl:focus {
     height: 60px;
 }
 
