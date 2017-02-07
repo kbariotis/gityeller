@@ -59,6 +59,9 @@ test('ProcessGithubResponse', () => {
 
   githubFixture.meta.status = '200 OK';
 
+  // always up to date issue
+  githubFixture[0].created_at = new Date();
+
   return worker.processGithubResponse({
     email: 'konmpar@gmail.com',
     repo: 'kbariotis/throw.js',
@@ -68,18 +71,37 @@ test('ProcessGithubResponse', () => {
   .then(() => expect(insertFn.mock.calls[0][0]).toMatchSnapshot());
 });
 
-test('FilterIssues', () => {
+test('filterSentIssues', () => {
   const worker = createWorker(githubMock, databaseMock, mailerMock);
 
-  const results = worker.filterIssues(githubFixture, [{issue_number: 1347}]);
+  const results = worker.filterSentIssues(githubFixture, [{issue_number: 1347}]);
 
   expect(results.length).toBe(0);
 });
 
-test('FilterIssues', () => {
+test('filterSentIssues', () => {
   const worker = createWorker(githubMock, databaseMock, mailerMock);
 
-  const results = worker.filterIssues(githubFixture, [{issue_number: 1234}]);
+  const results = worker.filterSentIssues(githubFixture, [{issue_number: 1234}]);
+
+  expect(results.length).toBe(1);
+});
+
+test('filterOutdatedIssues', () => {
+  const worker = createWorker(githubMock, databaseMock, mailerMock);
+
+  githubFixture[0].created_at = new Date('2011-04-22T13:33:48Z');
+  const results = worker.filterOutdatedIssues(githubFixture);
+
+  expect(results.length).toBe(0);
+});
+
+test('filterOutdatedIssues', () => {
+  const worker = createWorker(githubMock, databaseMock, mailerMock);
+
+  githubFixture[0].created_at = new Date();
+
+  const results = worker.filterOutdatedIssues(githubFixture);
 
   expect(results.length).toBe(1);
 });

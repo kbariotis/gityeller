@@ -4,6 +4,8 @@ const logger = require('winston');
 const MongoDB = require('mongodb');
 const BPromise = require('bluebird');
 
+const DELAY = 0;
+
 class Worker {
   constructor(github, database, mailer) {
     this.githubIssuesApi = github.issues;
@@ -82,10 +84,11 @@ class Worker {
             $in: issues.map(issue => issue.number)
           }
         }).toArray())
-        .then(results => this.filterIssues(issues, results))
+        .then(results => this.filterSentIssues(issues, results))
+        .then(filteredIssues => this.filterOutdatedIssues(issues))
         .then(filteredIssues => this.sendEmails(subscription, filteredIssues))
         .catch(error => logger.error(error))
-        .then(() => setTimeout(resolve, 3000));
+        .then(() => resolve());
       }
 
       return this.subscriptionsCollection.update({
@@ -93,15 +96,22 @@ class Worker {
       }, {
         $set: updateSubscriptionPayload
       })
-        .then(() => setTimeout(resolve, 3000));
+        .then(() => resolve());
     });
   }
 
   /**
   * Remove those from issues that exists in sent
   */
-  filterIssues(issues, sent) {
+  filterSentIssues(issues, sent) {
     return issues.filter(issue => sent.map(item => item.issue_number).indexOf(issue.number) === -1);
+  }
+
+/**
+  * Remove older issues
+  */
+  filterOutdatedIssues(issues) {
+    return issues.filter(issue => new Date(issue.created_at) > new Date().setHours(0, 0, 0));
   }
 
   sendEmails(subscription, issues) {
