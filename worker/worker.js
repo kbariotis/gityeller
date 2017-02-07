@@ -85,8 +85,8 @@ class Worker {
           }
         }).toArray())
         .then(results => this.filterSentIssues(issues, results))
-        .then(filteredIssues => this.filterOutdatedIssues(issues))
-        .then(filteredIssues => this.sendEmails(subscription, filteredIssues))
+        .then(notSendIssues => this.filterOutdatedIssues(notSendIssues))
+        .then(toSendIssues => this.sendEmails(subscription, toSendIssues))
         .catch(error => logger.error(error))
         .then(() => resolve());
       }
