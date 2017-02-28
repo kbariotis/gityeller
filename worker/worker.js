@@ -15,6 +15,8 @@ class Worker {
   }
 
   run(subscription) {
+    logger.debug(`Checking ${subscription.email} - ${subscription.repo} - ${subscription.label}`);
+
     if (!!subscription.is_enabled) {
       return this.makeGithubRequest(subscription)
         .then((response) => this.processGithubResponse(subscription, response))

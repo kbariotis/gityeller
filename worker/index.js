@@ -32,28 +32,23 @@ github.authenticate({
  * Main run function that handles the infinite
  * loop over the database
  */
-const run = (db, worker) => {
-  const collection = db.collection('subscriptions');
-  const cursor = collection.find({});
-
-  function processItem(subscription) {
-    if (subscription === null) {
-      logger.info('End of cursor');
-      return run(db, worker);
-    }
-
-    logger.info(`Checking ${subscription.email} - ${subscription.repo} - ${subscription.label}`);
-
-    return worker.run(subscription)
-      .then(() => cursor.nextObject())
-      .then(i => processItem(i));
+const run = (cursor, worker) => {
+  if (cursor.isClosed()) {
+    cursor.rewind();
   }
 
   return cursor
-    .nextObject()
-    .then(subscription => processItem(subscription))
+    .next()
+    .then(subscription => {
+      if (!subscription) {
+        throw new Error('Cursor got to the end');
+      } else {
+        return subscription;
+      }
+    })
+    .then(subscription => worker.run(subscription))
     .catch((error) => logger.error(error))
-    .catch(() => run(db, worker));
+    .then(() => setTimeout(() => run(cursor, worker), 0));
 };
 
 /**
@@ -64,6 +59,9 @@ MongoClient.connect(config.get('mongo.uri'))
     const mailer = createMailer(mailgun);
     const worker = createWorker(github, db, mailer);
 
-    return run(db, worker);
+    const collection = db.collection('subscriptions');
+    const cursor = collection.find({}).batchSize(1);
+
+    return run(cursor, worker);
   })
   .catch(err => logger.error('error', err));
