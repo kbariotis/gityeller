@@ -34,7 +34,7 @@ Once you have cloned the repository:
 
 Contributions are welcome! 
 
-Make sure that `npm test` passes and give me a [heads up](/issues) before you
+Make sure that `npm test` passes and give me a [heads up](../../issues) before you
 start writing code!
 
 ## License
