@@ -13,7 +13,7 @@ a new issue of a specific label.
 I needed a way to watch out issues of common labels like "need help", 
 "documentation", etc to contribute to my favorite repositories. 
 
-[GitYeller](https://gityeller.com) is what I came up with.
+[GitYeller](https://gityeller.com) is what I came up with. Read more about it at [my blog post](https://kostasbariotis.com/gityeller-com-weekend-project/).
 
 ## Development
 
